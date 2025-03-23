@@ -1,48 +1,50 @@
 # BigQuery MCP Server
 
-BigQueryデータをクエリするためのMCP (Model Context Protocol) サーバーです。AIアシスタント（Claude）がBigQueryデータに直接アクセスできるようになります。
+*Read this in other languages: [日本語](README.ja.md)*
 
-## 機能
+An MCP (Model Context Protocol) server for querying BigQuery data. This allows AI assistants like Claude to directly access your BigQuery data.
 
-- 自然言語でBigQueryにSQLクエリを実行
-- データセットとテーブルの一覧表示
-- テーブルスキーマの表示
-- 安全制御付きの読み取り専用クエリの実行
+## Features
 
-## 使用方法
+- Execute SQL queries to BigQuery using natural language
+- List datasets and tables
+- View table schemas
+- Execute read-only queries with security controls
 
-### 前提条件
+## Usage
 
-- BigQueryが有効なGoogleクラウドプロジェクト
-- ローカルに設定された認証情報
+### Prerequisites
+
+- Google Cloud project with BigQuery enabled
+- Locally configured authentication credentials
 
 ```bash
 gcloud auth application-default login
 ```
 
-### ローカルでの実行
+### Local Execution
 
-1. 依存関係のインストール:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. プロジェクトのビルド:
+2. Build the project:
 
 ```bash
 npm run build
 ```
 
-3. サーバーの起動:
+3. Start the server:
 
 ```bash
 npm start -- --project-id YOUR_PROJECT_ID --location YOUR_LOCATION
 ```
 
-## Claudeデスクトップへのインストール
+## Installation in Claude Desktop
 
-Claude Desktop設定ファイル（通常は`~/.config/Claude Desktop/claude_desktop_config.json`）に以下のエントリを追加します：
+Add the following entry to your Claude Desktop configuration file (typically `~/.config/Claude Desktop/claude_desktop_config.json`):
 
 ```json
 {
@@ -54,7 +56,7 @@ Claude Desktop設定ファイル（通常は`~/.config/Claude Desktop/claude_des
         "--project-id",
         "YOUR_PROJECT_ID",
         "--location",
-        "us"  // USマルチリージョンの場合
+        "us"  // For US multi-region datasets
       ],
       "env": {
         "GOOGLE_APPLICATION_CREDENTIALS": "/absolute/path/to/your/credentials.json"
@@ -64,30 +66,30 @@ Claude Desktop設定ファイル（通常は`~/.config/Claude Desktop/claude_des
 }
 ```
 
-## 動作確認
+## Connectivity Test
 
-サーバが正しく動作しているか確認するには、以下のコマンドを実行します：
+To verify that the server is working correctly, run:
 
 ```bash
 npm test
 ```
 
-これにより、以下のテストが実行されます：
+This will run the following tests:
 
-- リソース一覧の取得
-- ツール一覧の取得
-- SQLクエリの実行
-- リソーススキーマの読み取り
+- Retrieving resource list
+- Retrieving tool list
+- Executing SQL query
+- Reading resource schema
 
-## 設定
+## Configuration
 
-サーバーは以下のコマンドライン引数を受け付けます:
+The server accepts the following command line arguments:
 
-- `--project-id`: (必須) GoogleクラウドプロジェクトID
-- `--location`: (オプション) BigQueryのロケーション、デフォルトは 'us-central1'
-  - USマルチリージョンのデータセットには 'us' を指定
+- `--project-id`: (Required) Google Cloud project ID
+- `--location`: (Optional) BigQuery location, defaults to 'us-central1'
+  - Use 'us' for US multi-region datasets
 
-## 制限事項
+## Limitations
 
-- 読み取り専用クエリのみが許可されます
-- デフォルトのクエリ制限は処理データ1GBです
+- Only read-only queries are allowed
+- Default query limit is 1GB of processed data
