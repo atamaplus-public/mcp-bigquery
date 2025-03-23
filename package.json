@@ -14,7 +14,7 @@
     "build": "tsc",
     "postbuild": "chmod +x dist/index.js",
     "start": "node dist/index.js",
-    "test": "node minimal-test.js",
+    "test": "node test/connectivity-test.js",
     "dev": "tsc --watch",
     "clean": "rm -rf dist"
   },

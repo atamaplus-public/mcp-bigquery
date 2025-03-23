@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * MCP Serverテストツール - 修正版 (メソッド名修正)
- * MCP SDK v0.6.0で使用される正しいJSON-RPCメソッド名を使用
+ * BigQuery MCP Server 疎通テストツール
+ * MCP ServerとBigQuery間の接続性をテストします
  */
 
 import { spawn } from 'child_process';
@@ -10,7 +10,7 @@ import { spawn } from 'child_process';
 const server = spawn('node', [
   'dist/index.js',
   '--project-id', 'atamaplus-data-workspace',
-  '--location', 'us-central1'
+  '--location', 'us'
 ], { 
   stdio: ['pipe', 'pipe', 'pipe'] 
 });
@@ -29,7 +29,7 @@ server.stdout.on('data', (data) => {
 setTimeout(() => {
   console.log('リクエストを送信します...');
   
-  // 試すメソッド名 - MCP SDK v0.6.0の正しいメソッド名を使用
+  // テスト一覧 - MCP ServerとBigQuery間の接続性をテスト
   const tests = [
     {
       name: 'リソース一覧',

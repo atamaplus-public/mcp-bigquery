@@ -20,24 +20,6 @@ BigQueryデータをクエリするためのMCP (Model Context Protocol) サー�
 gcloud auth application-default login
 ```
 
-### Dockerでの実行
-
-1. Dockerイメージをビルド:
-
-```bash
-docker build -t mcp-bigquery-server .
-```
-
-2. コンテナ実行:
-
-```bash
-docker run --rm \
-  -v $HOME/.config/gcloud:/root/.config/gcloud \
-  mcp-bigquery-server \
-  --project-id YOUR_PROJECT_ID \
-  --location YOUR_LOCATION
-```
-
 ### ローカルでの実行
 
 1. 依存関係のインストール:
@@ -58,12 +40,52 @@ npm run build
 npm start -- --project-id YOUR_PROJECT_ID --location YOUR_LOCATION
 ```
 
+## Claudeデスクトップへのインストール
+
+Claude Desktop設定ファイル（通常は`~/.config/Claude Desktop/claude_desktop_config.json`）に以下のエントリを追加します：
+
+```json
+{
+  "mcpServers": {
+    "bigquery": {
+      "command": "node",
+      "args": [
+        "/absolute/path/to/dist/index.js",
+        "--project-id",
+        "YOUR_PROJECT_ID",
+        "--location",
+        "us"  // USマルチリージョンの場合
+      ],
+      "env": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "/absolute/path/to/your/credentials.json"
+      }
+    }
+  }
+}
+```
+
+## 動作確認
+
+サーバが正しく動作しているか確認するには、以下のコマンドを実行します：
+
+```bash
+npm test
+```
+
+これにより、以下のテストが実行されます：
+
+- リソース一覧の取得
+- ツール一覧の取得
+- SQLクエリの実行
+- リソーススキーマの読み取り
+
 ## 設定
 
 サーバーは以下のコマンドライン引数を受け付けます:
 
 - `--project-id`: (必須) GoogleクラウドプロジェクトID
 - `--location`: (オプション) BigQueryのロケーション、デフォルトは 'us-central1'
+  - USマルチリージョンのデータセットには 'us' を指定
 
 ## 制限事項
 
