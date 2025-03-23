@@ -1,0 +1,31 @@
+{
+  "name": "mcp-bigquery-server",
+  "version": "0.1.0",
+  "description": "MCP server for interacting with BigQuery databases",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-bigquery-server": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "chmod +x dist/index.js",
+    "start": "node dist/index.js",
+    "test": "node minimal-test.js",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "0.6.0",
+    "@google-cloud/bigquery": "^7.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
