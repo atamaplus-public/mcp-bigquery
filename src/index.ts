@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { BigQuery } from '@google-cloud/bigquery';
 import { runServer } from './server.js';
 
@@ -68,9 +67,9 @@ export function validateConfig(config: ServerConfig): void {
   }
 
   // ロケーション形式の検証（指定されている場合）
-  if (!/^[a-z]+-[a-z]+\d+$/.test(config.location)) {
-    throw new Error('無効なロケーション形式です');
-  }
+  // if (!/^[a-z]+-[a-z]+\d+$/.test(config.location)) {
+  //   throw new Error('無効なロケーション形式です');
+  // }
 }
 
 /**
@@ -83,9 +82,7 @@ export function initializeBigQuery(config: ServerConfig): BigQuery {
 }
 
 // メイン処理の実行
-if (require.main === module) {
-  runServer().catch((error) => {
-    console.error('致命的なエラー:', error);
-    process.exit(1);
-  });
-}
+runServer().catch((error) => {
+  console.error('致命的なエラー:', error);
+  process.exit(1);
+});
