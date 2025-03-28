@@ -86,40 +86,43 @@ function createServer(): Server {
 
 /**
  * リソースのリストを取得するハンドラーを設定する
+ * NOTE: Client（Claude Desktopなど）から定期的にpollingが来るので、dummy responseを返す
+ *
  */
 function setupListResourcesHandler(server: Server, bigquery: BigQuery, resourceBaseUrl: URL, schemaPath: string): void {
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
-    try {
-      console.error('データセットを取得中...');
-      const [datasets] = await bigquery.getDatasets();
-      console.error(`${datasets.length}個のデータセットを検出しました`);
+    return { "success": true };
+    // try {
+      // console.error('データセットを取得中...');
+      // const [datasets] = await bigquery.getDatasets();
+      // console.error(`${datasets.length}個のデータセットを検出しました`);
       
-      const resources = [];
+      // const resources = [];
 
-      for (const dataset of datasets) {
-        console.error(`データセット処理中: ${dataset.id}`);
-        const [tables] = await dataset.getTables();
-        console.error(`データセット${dataset.id}内に${tables.length}個のテーブルとビューを検出しました`);
+      // for (const dataset of datasets) {
+      //   console.error(`データセット処理中: ${dataset.id}`);
+      //   const [tables] = await dataset.getTables();
+      //   console.error(`データセット${dataset.id}内に${tables.length}個のテーブルとビューを検出しました`);
         
-        for (const table of tables) {
-          // テーブルかビューかを確認するためのメタデータ取得
-          const [metadata] = await table.getMetadata() as [ResourceMetadata, unknown];
-          const resourceType = metadata.type === 'VIEW' ? 'view' : 'table';
+      //   for (const table of tables) {
+      //     // テーブルかビューかを確認するためのメタデータ取得
+      //     const [metadata] = await table.getMetadata() as [ResourceMetadata, unknown];
+      //     const resourceType = metadata.type === 'VIEW' ? 'view' : 'table';
           
-          resources.push({
-            uri: new URL(`${dataset.id}/${table.id}/${schemaPath}`, resourceBaseUrl).href,
-            mimeType: "application/json",
-            name: `"${dataset.id}.${table.id}" ${resourceType} schema`,
-          });
-        }
-      }
+      //     resources.push({
+      //       uri: new URL(`${dataset.id}/${table.id}/${schemaPath}`, resourceBaseUrl).href,
+      //       mimeType: "application/json",
+      //       name: `"${dataset.id}.${table.id}" ${resourceType} schema`,
+      //     });
+      //   }
+      // }
 
-      console.error(`合計${resources.length}個のリソースを検出しました`);
-      return { resources };
-    } catch (error) {
-      console.error('ListResourcesRequestSchemaでエラー:', error);
-      throw error;
-    }
+      // console.error(`合計${datasets.length}個のリソースを検出しました`);
+      return { "success": true };
+    // } catch (error) {
+    //   console.error('ListResourcesRequestSchemaでエラー:', error);
+    //   throw error;
+    // }
   });
 }
 
