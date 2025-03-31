@@ -1,0 +1,6 @@
+{
+  "projectId": "YOUR_PROJECT_ID",
+  "location": "us",
+  "testQuery": "SELECT 1",
+  "resourceUri": "bigquery://YOUR_PROJECT_ID/YOUR_DATASET/YOUR_TABLE/schema"
+} 
