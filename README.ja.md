@@ -74,6 +74,28 @@ Claude Desktop設定ファイル（通常は`~/.config/Claude Desktop/claude_des
 npm test
 ```
 
+このテストは設定ファイルを使用してテスト設定を行います。以下の手順に従ってください：
+
+1. サンプル設定ファイルをコピーします：
+   ```bash
+   cp config.sample.json config.json
+   ```
+
+2. `config.json`を編集してプロジェクト設定に合わせます：
+   ```json
+   {
+     "projectId": "YOUR_PROJECT_ID",
+     "location": "us",
+     "testQuery": "SELECT 1",
+     "resourceUri": "bigquery://YOUR_PROJECT_ID/YOUR_DATASET/YOUR_TABLE/schema"
+   }
+   ```
+
+3. テストを実行します：
+   ```bash
+   npm test
+   ```
+
 これにより、以下のテストが実行されます：
 
 - リソース一覧の取得

@@ -74,7 +74,29 @@ To verify that the server is working correctly, run:
 npm test
 ```
 
-This will run the following tests:
+This test uses a configuration file for test settings. Follow these steps:
+
+1. Copy the sample configuration file:
+   ```bash
+   cp config.sample.json config.json
+   ```
+
+2. Edit `config.json` to match your project settings:
+   ```json
+   {
+     "projectId": "YOUR_PROJECT_ID",
+     "location": "us",
+     "testQuery": "SELECT 1",
+     "resourceUri": "bigquery://YOUR_PROJECT_ID/YOUR_DATASET/YOUR_TABLE/schema"
+   }
+   ```
+
+3. Run the test:
+   ```bash
+   npm test
+   ```
+
+The test will run the following checks:
 
 - Retrieving resource list
 - Retrieving tool list
