@@ -30,14 +30,6 @@ interface ResourceMetadata {
   };
 }
 
-/**
- * クエリの実行結果の型定義
- */
-interface QueryResult {
-  content: Array<{ type: string; text: string }>;
-  isError: boolean;
-}
-
 // ----- BigQuery操作関連ユーティリティ -----
 
 /**
@@ -218,14 +210,23 @@ function setupCallToolHandler(server: Server, bigquery: BigQuery, config: Server
         });
 
         return {
-          result: {
-            content: [{ type: "text", text: JSON.stringify(rows, null, 2) }],
-            isError: false
-          }
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify(rows, null, 2)
+            }
+          ]
         };
       } catch (error) {
         console.error('SQLクエリ実行でエラー:', error);
-        throw error;
+        return {
+          content: [
+            {
+              type: "text",
+              text: `クエリ実行中にエラーが発生しました: ${error instanceof Error ? error.message : String(error)}`
+            }
+          ]
+        };
       }
     }
     throw new Error(`不明なツール: ${request.params.name}`);
